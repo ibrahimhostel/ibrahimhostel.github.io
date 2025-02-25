@@ -1,0 +1,73 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: linear-gradient(to bottom, #e0f7fa, #00838f);
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 90%;
+  max-width: 400px;
+  margin: auto;
+  padding-top: 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+nav a {
+  color: gray;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+nav .active {
+  color: #00838f;
+  font-weight: bold;
+}
+
+.mosque-shape {
+  background: #00838f;
+  padding: 40px 0;
+  border-radius: 50% 50% 0 0;
+  position: relative;
+}
+
+.mosque-shape h1 {
+  font-size: 28px;
+}
+
+.prayer-times {
+  background: white;
+  color: #00838f;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: -20px;
+}
+
+.prayer-times p {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.prayer-times p:last-child {
+  border-bottom: none;
+}
+
+.location {
+  margin-top: 20px;
+}
+
+.location .method {
+  font-size: 14px;
+  opacity: 0.7;
+}
