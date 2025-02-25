@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ibrahim Hostel Da'wah Community | Home </title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://ibrahimhostel.github.io/fonts/fontawesome/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="container">
+      
+        <div class="mosque-shape">
+            <h2>Jamaat Time Schedule:</h2>
+            <h3>Room Number: 208</h3>
+            <div id="digital-clock" class="seven-segment"></div></br>
+               <div id="hijri-calendar">
+    <div class="hijri-date"></div></div>
+        </div>
+
+        <div class="prayer-times" id="prayer-times">
+            <p>Time Is Loading, Please Wait...</p>
+        </div>
+
+        <div class="location">
+            <p>Ibrahim Hostel Da'wah Community</p>
+            <p class="method">
+               <a href="https://ihdc.sabasatlas.com/namaj_time" style="text-decoration: none; color: white">Update Time</a> ❖   <a href="https://ihdc.sabasatlas.com/mashwara_update" style="text-decoration: none; color: white">Mashwara</a> ❖   
+              <a href="https://ihdc.sabasatlas.com/contact_us" style="text-decoration: none; color: white"> Contact 
+              
+              </a>❖   <a href="https://chat.whatsapp.com/EsoHrTSKgRRJp9SYuYXtHH" style="text-decoration: none; color: white"> WhatsApp </a>
+              
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const SHEET_URL = "https://script.google.com/macros/s/AKfycbwa6fpX3TJMKnqz3JFdCXhzIAmqknLfWh2HuBm4nZcpBZAcU-PLw2o1isWE_uRVfO-L/exec";
+
+        async function fetchPrayerTimes() {
+            try {
+                let response = await fetch(SHEET_URL);
+                let data = await response.json();
+
+                let prayerHTML = "";
+                data.forEach(prayer => {
+                    prayerHTML += `<p>${prayer.salah} <span>${prayer.time}</span></p>`;
+                });
+
+                document.getElementById("prayer-times").innerHTML = prayerHTML;
+            } catch (error) {
+                console.error("Error fetching prayer times:", error);
+                document.getElementById("prayer-times").innerHTML = "<p>Failed to load prayer times.</p>";
+            }
+        }
+
+        fetchPrayerTimes();
+    </script>
+    <!-- Link to 7-Segment Font -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
+<script>
+  // Function to update the 7-segment style digital clock and Hijri date
+  function updateClock() {
+    let now = new Date();
+    
+    // Get current time (HH:MM:SS format)
+    let hours = now.getHours().toString().padStart(2, '0');
+    let minutes = now.getMinutes().toString().padStart(2, '0');
+    let seconds = now.getSeconds().toString().padStart(2, '0');
+    let timeString = `${hours}:${minutes}:${seconds}`;
+    
+    
+    
+    // Update HTML content
+    document.getElementById("digital-clock").innerHTML = timeString;
+  }
+  
+  // Run clock every second
+  setInterval(updateClock, 1000);
+  updateClock();
+</script>
+
+<style>
+  /* Styling for the 7-Segment Digital Clock */
+  #digital-clock {
+    font-size: 38px;
+    font-weight: bold;
+    color: chartreuse;
+    font-family: 'Orbitron', sans-serif;
+    background: #00838f;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 10px;
+    text-align: center;
+  }
+</style>
+<script>
+  // Hijri month names in English
+  const hijriMonths = [
+    "Muharram", "Safar", "Rabi' al-Awwal", "Rabi' al-Thani",
+    "Jumada al-Awwal", "Jumada al-Thani", "Rajab", "Sha'ban",
+    "Ramadan", "Shawwal", "Dhul-Qadah", "Dhul-Hijjah"
+  ];
+  
+  // Function to fetch accurate Hijri date from an API
+  async function updateHijriCalendar() {
+    try {
+      // Fetch Hijri date from a reliable API
+      let response = await fetch("https://api.aladhan.com/v1/gToH?gregorian=" + new Date().toISOString().split('T')[0]);
+      let data = await response.json();
+      
+      if (data && data.data && data.data.hijri) {
+        let hijriDay = data.data.hijri.day;
+        let hijriMonth = hijriMonths[parseInt(data.data.hijri.month.number) - 1];
+        let hijriYear = data.data.hijri.year;
+        
+        document.querySelector(".hijri-date").innerHTML = `${hijriDay} ${hijriMonth}, ${hijriYear}`;
+      } else {
+        document.querySelector(".hijri-date").innerHTML = "Error fetching Hijri date!";
+      }
+    } catch (error) {
+      console.error("Error fetching Hijri date:", error);
+      document.querySelector(".hijri-date").innerHTML = "Failed to load date!";
+    }
+  }
+  
+  // Update Hijri calendar on page load
+  updateHijriCalendar();
+</script>
+
+<style>
+  /* Clean Hijri Calendar Styling */
+  #hijri-calendar {
+    text-align: center;
+    color: white;
+    background: #00838f;
+    border-radius: 8px;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .hijri-date {
+    font-size: 18px;
+    color: cyan;
+  }
+</style>
+
+
+
+</body>
+</html>
