@@ -60,17 +60,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
 
 <script>
-  // Function to update the 7-segment style digital clock and Hijri date
+  // Function to update the 12-hour format digital clock
   function updateClock() {
     let now = new Date();
     
-    // Get current time (HH:MM:SS format)
-    let hours = now.getHours().toString().padStart(2, '0');
+    // Get hours, minutes, and seconds
+    let hours = now.getHours();
     let minutes = now.getMinutes().toString().padStart(2, '0');
     let seconds = now.getSeconds().toString().padStart(2, '0');
-    let timeString = `${hours}:${minutes}:${seconds}`;
     
+    // Convert to 12-hour format and determine AM/PM
+    let amPm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12; // Convert 0 to 12 for midnight
     
+    let timeString = `${hours}:${minutes}:${seconds} ${amPm}`;
     
     // Update HTML content
     document.getElementById("digital-clock").innerHTML = timeString;
